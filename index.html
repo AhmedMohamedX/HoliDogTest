@@ -25,11 +25,11 @@
     <div class="box" >
       <!-- select box wich will contain the list of all breeds -->
       <select id="select" >
-       <option>Test</option>
+      
       </select>
 
       <!-- button to get a photo of the selected breed -->
-      <a class="button style="float: right;">Show an image</a>
+      <a class="button" onclick="GetBreedImage()" style="float: right;">Show an image</a>
 
     </div>
     
@@ -49,14 +49,44 @@
 
             //call the api url and save data into the "result" variable
             $.getJSON("https://dog.ceo/api/breeds/list/all",function (result){
-                    console.log(result.message);
+                    
+                    //get the returned object keys and store them into the "keys" variable
+                    var keys = Object.keys(result.message);
+
+                    //appending all retreived breeds to the select box
+                    $.each(keys, function (i, item) {
+                    $('#select').append($('<option>', { 
+                     value: item.value,
+                     text : item
+                      }));
+                    });
+
+                    //adding the "nice select" style to our select box
+                        $('select:not(.ignore)').niceSelect();      
+                         FastClick.attach(document.body);
 
             });
       });
 
      </script>
   
-  
+
+  <!-- script to get the breed image from the selected breed -->
+   <script>
+       
+        function GetBreedImage(){
+          //get the selected breed from the select box
+              var selectedbreed = $('#select').find(":selected").text();
+
+              //call the api url to get the image
+            $.getJSON("https://dog.ceo/api/breed/"+selectedbreed+"/images",function (result){
+
+              //get the first image from the json response
+                   var imagelink = result.message[0]
+                   console.log(imagelink)
+            });
+            }
+     </script>
   
  
 </body>
