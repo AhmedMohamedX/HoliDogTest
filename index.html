@@ -32,7 +32,13 @@
       <a class="button" onclick="GetBreedImage()" style="float: right;">Show an image</a>
 
     </div>
-    
+
+    <!-- the breed image's div -->
+     <div id="imagediv">
+
+
+
+    </div>
     
   </div>
    <!-- jquery call -->
@@ -84,6 +90,12 @@
               //get the first image from the json response
                    var imagelink = result.message[0]
                    console.log(imagelink)
+
+                   //clear the image div in case it contains an old image
+                   $('#imagediv').empty();
+
+                   //append the fetshed image to the div using the dog API's url for it
+                   $('#imagediv').prepend('<img style="display: block;margin-left: auto;margin-right: auto;"  src="'+imagelink+'" />')
             });
             }
      </script>
